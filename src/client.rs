@@ -342,7 +342,7 @@ pub fn matrix_with_identity<'a>(p: &PolyMatrixRaw<'a>) -> PolyMatrixRaw<'a> {
     r
 }
 
-fn params_with_moduli(params: &Params, moduli: &Vec<u64>) -> Params {
+pub fn params_with_moduli(params: &Params, moduli: &Vec<u64>) -> Params {
     Params::init(
         params.poly_len,
         moduli,
