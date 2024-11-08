@@ -1004,7 +1004,7 @@ impl<'a> Client<'a> {
             for c in 0..db_item.cols {
                 let poly = db_item.get_poly_mut(r, c);
                 for z in 0..poly.len() {
-                    poly[z] = (poly[z] + concat_u8s_into_u64(masks_bytes_chunks.next().unwrap()))
+                    poly[z] = (poly[z] + Self::concat_u8s_into_u64(masks_bytes_chunks.next().unwrap()))
                         % params.pt_modulus;
                 }
             }
@@ -1014,6 +1014,16 @@ impl<'a> Client<'a> {
         // result.to_vec(p_bits as usize, params.modp_words_per_chunk())
         db_item.to_vec(p_bits as usize, params.poly_len)
     }
+
+    fn concat_u8s_into_u64(bytes: &[u8]) -> u64 {
+    assert_eq!(bytes.len(), 8);
+
+    let mut result = 0u64;
+    for (i, &byte) in bytes.iter().enumerate() {
+        result |= (byte as u64) << (56 - i * 8);
+    }
+    result
+}
 }
 
 #[cfg(test)]
