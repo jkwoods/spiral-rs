@@ -998,8 +998,8 @@ impl<'a> Client<'a> {
             }
         }
 
-        let masks_bytes_chunks = masks_bytes.chunks(8);
-        let db_item = result;
+        let mut masks_bytes_chunks = masks_bytes.chunks(8);
+        let mut db_item = result;
         for r in 0..db_item.rows {
             for c in 0..db_item.cols {
                 let poly = db_item.get_poly_mut(r, c);
